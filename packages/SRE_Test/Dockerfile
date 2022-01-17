@@ -1,6 +1,6 @@
 #Base Build image 
 FROM node:alpine as BUILD_IMAGE
-
+ARG NEXT_PUBLIC_APP_VERSION
 
 # Create app directory and use it as the work directory
 RUN mkdir -p /app
