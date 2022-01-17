@@ -33,7 +33,6 @@ SRE <-- Root folder
         └── styles
 ```
 <br/>
-
 ### How to build non-production image:
 ** Important that you are in the Root folder for this to work... [/SRE] **
 
@@ -42,7 +41,6 @@ docker-compose up
 ```
 
 <br/>
-
 ### How to build production image:
 ** Important that you are in the SRE_Test folder when running the following commands  [/SRE/packages/SRE_Test/]
 
