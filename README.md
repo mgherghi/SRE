@@ -32,7 +32,7 @@ Since the pdf instructed me to optimize the production image in various ways, I 
 
      * Using a .dockerignore file and ignoring local modules and debug logs from being copied onto Docker image.  (node_modules and npm-debug.log)
     
-     * Minimizing the amount of Layers to install packages in the Dockerfile to avoid increasing the size of the image.
+     * Minimizing the amount of layers to install packages in the Dockerfile to avoid increasing the size of the image.
          * This last step also was essential in optimizing the run steps so that only the layers that change frequently (those being the RUN steps) are towards the bottom while the steps that changed rarely were more towards the top of the dockerfile. I do believe that I could have made the production image even smaller by using a distroless image(i.e gcr.io/distroless), but I was not sure if I was allowed and I decided to stay with the node:alpine images.  
 
 *** End Results were as follows ***
