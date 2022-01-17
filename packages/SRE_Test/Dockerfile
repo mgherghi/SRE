@@ -2,7 +2,10 @@
 FROM node:alpine as BUILD_IMAGE
 
 
+# Create app directory and use it as the work directory
+RUN mkdir -p /app
 WORKDIR /app
+
 COPY package*.json /app/
 
 #install only needed dependencies 
@@ -34,4 +37,4 @@ ENV PORT 3000
 EXPOSE 3000
 
 # Running the app
-CMD "npm" "run" "dev"
+CMD "npm" "run" "start"
