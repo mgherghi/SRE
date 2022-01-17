@@ -52,7 +52,7 @@ docker build --build-arg NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION -f Doc
 ```
 Example:
 ```bash
-docker build --build-arg NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION -f Dockerfile -t myApp .
+docker build --build-arg NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION -f Dockerfile -t myapp .
 ```
 
 ** Then run the image. Since the instructions didn't state specific ports for production image, I assumed that it 
@@ -64,7 +64,7 @@ docker run -p [portValue]:[portValue] [nameOfImage]
 
 Example:
 ```bash
-docker run -p 3000:3000 myApp
+docker run -p 3000:3000 myapp
 ```
 
 <br/>
