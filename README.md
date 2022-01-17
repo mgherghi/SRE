@@ -17,6 +17,7 @@ export NEXT_PUBLIC_APP_VERSION=v1.0.0
 
 ### Folder Structure & Explanation:
 
+```bash
 SRE <-- Root folder 
 ├── README.md
 ├── docker-compose.yml <-- docker-compose file for non-production image
@@ -31,7 +32,7 @@ SRE <-- Root folder
         ├── pages
         ├── public
         └── styles
-
+```
 <br/>
 
 ### How to build non-production image:
