@@ -29,6 +29,8 @@ Since the pdf instructed me to optimize the production image in various ways, I 
      * Using multi-stage Docker builds (This way, our final image won’t have any unnecessary content except the required artifact).
      
      * Removing development dependencies (as discussed above), and choosing a lightweight and small base image.  
+
+     * Using a .dockerignore file and ignoring local modules and debug logs from being copied onto Docker image.  (node_modules,npm-debug.log)
     
      * Minimizing the amount of Layers to install packages in the Dockerfile to avoid increasing the size of the image.
          * This last step also was essential in optimizing the run steps so that only the layers that change frequently(That being of the RUN steps) are towards the bottom while the steps that changed rarely were more towards the top of the dockerfile I do believe that I could have made the production image even smaller by using a distroless image(i.e gcr.io/distroless), but I was not sure if I was allowed and I decided to stay with the node:alpine images.  
@@ -36,15 +38,15 @@ Since the pdf instructed me to optimize the production image in various ways, I 
 *** End Results were the following ***
     
      non_production_image_nextjs build time: 30s
-     non_production_image_nextjs size: 1.18GB
+     non_production_image_nextjs size: 799MB
      -------------------------------------------
      production_image build time: 8s
-     production_image size: 385MB
+     production_image size: 335MB
 
 ```bash
 REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
-non_production_image_nextjs   latest    1cf772ef1410   2 minutes ago    1.18GB
-production_image              latest    18632066a6be   25 minutes ago   385MB
+non_production_image_nextjs   latest    1cf772ef1410   2 minutes ago    779MB
+production_image              latest    18632066a6be   25 minutes ago   335MB
 ```
 
 
