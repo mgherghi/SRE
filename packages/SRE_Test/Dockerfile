@@ -1,12 +1,16 @@
 #Base Build image 
 FROM node:alpine as BUILD_IMAGE
-ENV NEXT_PUBLIC_APP_VERSION=v1
+
+
 WORKDIR /app
 COPY package*.json /app/
 
+#install only needed dependencies 
 RUN npm install --production 
 
+# Bundle app source
 COPY . .
+
 # build && remove dev dependencies
 RUN npm run build && npm prune --production
 
