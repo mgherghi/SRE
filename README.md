@@ -1,10 +1,39 @@
 <br/>
 
-# Requirements 
+### Requirements 
 
 - Docker
 
 <br/>
+
+### Logic and end-results
+
+Since the pdf instructed me to optimize the production image in various ways, I would like to explain my logic behind what I did and why I did it.
+    * Install node dependencies for production:
+        - This step was fairly easy, as using the "--production" flag when installing dependencies and also pruning at the end (just in case) made me confident that the image was as light as possible in its entirety.
+    
+    * Use an appropriate lightweight base image from node
+        - My methods for creating the lightweight image consisted of:
+            -> Using multi-stage Docker builds (This way, our final image won’t have any unnecessary content except the required artifact)
+            -> Removing development dependencies (as discussed above), and choosing a lightweight and small base image.  
+            -> Minimizing the amount of Layers to install packages in the Dockerfile to avoid increasing the size of the image.
+               ^ This last step also was essential in optimizing the run steps so that only the layers that change frequently(That being of the RUN steps) are     towards the bottom while the steps that changed rarely were more towards the top of the dockerfile
+        I do believe that I could have made the production image even smaller by using a distroless image(i.e gcr.io/distroless), but I was not sure if I was allowed and I decided to stay with the node:alpine images.  
+
+    * End Results were the following ...
+        non_production_image_nextjs build time: 30s
+        non_production_image_nextjs size: 1.18GB
+
+        production_image build time: 8s
+        non_production size: 385MB
+
+    ```bash
+REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
+non_production_image_nextjs   latest    1cf772ef1410   2 minutes ago    1.18GB
+production_image              latest    18632066a6be   25 minutes ago   385MB
+    ```
+
+
 ### Getting Started
 
 Export this variable in your local environment, or any other version you would like 
@@ -16,7 +45,6 @@ export NEXT_PUBLIC_APP_VERSION=v1.0.0
 
 ### Folder Structure & Explanation:
 
-```bash
 SRE <-- Root folder 
 ├── README.md
 ├── docker-compose.yml <-- docker-compose file for non-production image
@@ -31,11 +59,11 @@ SRE <-- Root folder
         ├── pages
         ├── public
         └── styles
-```
+
 <br/>
 
 ### How to build non-production image:
-** Important that you are in the Root folder for this to work... [/SRE] **
+** [Important that you are in the Root folder for this to work... That being /SRE] **
 
 ```bash
 docker-compose up
@@ -44,27 +72,16 @@ docker-compose up
 <br/>
 
 ### How to build production image:
-** Important that you are in the SRE_Test folder when running the following commands  [/SRE/packages/SRE_Test/]
+!**[Important that you are in the SRE_Test folder when running these commands .. i.e /SRE/packages/SRE_Test/]
 
 ** First build the image for production
 ```bash
 docker build --build-arg NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION -f Dockerfile -t [nameOfImage] .
 ```
-Example:
-```bash
-docker build --build-arg NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION -f Dockerfile -t myapp .
-```
 
 ** Then run the image. Since the instructions didn't state specific ports for production image, I assumed that it 
-** would be up to the user to set them.  
-
+** would be up to the user to set them.  To change ports just change the values after -p , i.e "docker run -p [numValue]:[numValue] [nameOfImage]"
 ```bash
-docker run -p [portValue]:[portValue] [nameOfImage]
+docker run -p 3000:3000 [nameOfImage] 
 ```
-
-Example:
-```bash
-docker run -p 3000:3000 myapp
-```
-
 <br/>
