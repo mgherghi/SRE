@@ -5,7 +5,6 @@
 - Docker
 
 <br/>
-
 ### Getting Started
 
 Export this variable in your local environment, or any other version you would like 
