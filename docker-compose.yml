@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  nextjs:
+    ports:
+      - 3000:3000
+    build:
+      context: packages/SRE_Test
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./packages/SRE_Test:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION
+    env_file:
+      - .env

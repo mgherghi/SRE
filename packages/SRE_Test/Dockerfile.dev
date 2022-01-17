@@ -1,0 +1,28 @@
+# Lightweight node image
+FROM node:alpine
+
+# Port Mapping
+ENV PORT 3000
+
+# Install minimal packages
+RUN apk --no-cache add npm 
+
+# Create app directory and use it as the work directory
+RUN mkdir -p /app
+WORKDIR /app
+
+# Installing dependencies
+COPY package*.json /app/
+RUN npm install 
+
+# Copying source files
+COPY . /app
+
+# Building app
+RUN npm run build 
+
+# Port Mapping
+EXPOSE 3000
+
+# Running the app 
+CMD "npm" "run" "dev"
